@@ -1,5 +1,6 @@
 package com.example.weather_app
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,10 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 
-class MyAdapter(private val data: List<Data>) : RecyclerView.Adapter<MyAdapter.ViewHolder>()
+class MyAdapter(private val data: List<DayForecast>) : RecyclerView.Adapter<MyAdapter.ViewHolder>()
 {
     @SuppressLint("NewApi")
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -27,17 +29,19 @@ class MyAdapter(private val data: List<Data>) : RecyclerView.Adapter<MyAdapter.V
         private val sunsetView: TextView = view.findViewById(R.id.sunset)
 
 
-        fun bind(data: Data)
+        fun bind(data: DayForecast)
         {
-            val instant = Instant.ofEpochMilli(data.date)
+            Log.e("TEST3", "bind: "+ data.date)
+            Log.e("TAG", "bind: "+ data.date)
+            val instant = Instant.ofEpochMilli(data.date!!)
             val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
             dateView.text = formatterMonthDay.format(dateTime)
 
-            val tDay = "Temp: " + data.temp.getDayTemp() + "°"
+            val tDay = "Temp: " + data.temp!!.day.roundToInt() + "°"
             tempView.text = tDay
-            val tMax = "High: " + data.temp.getMaxTemp() + "°"
+            val tMax = "High: " + data.temp.max.roundToInt() + "°"
             maxView.text = tMax
-            val tMin = "Low: " + data.temp.getMinTemp() + "°"
+            val tMin = "Low: " + data.temp.min.roundToInt() + "°"
             minView.text = tMin
 
             val instantSunrise = Instant.ofEpochMilli(data.sunrise)
