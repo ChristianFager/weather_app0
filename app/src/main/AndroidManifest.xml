@@ -16,7 +16,6 @@
             android:name=".ForecastActivity"
             android:exported="false"
             android:label="@string/title_activity_forecast"
-            android:theme="@style/Theme.Weather_app.NoActionBar"
             />
         <activity
             android:name=".MainActivity"

@@ -4,9 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -27,34 +30,41 @@ class MyAdapter(private val data: List<DayForecast>) : RecyclerView.Adapter<MyAd
         private val minView: TextView = view.findViewById(R.id.tempMin)
         private val sunriseView: TextView = view.findViewById(R.id.sunrise)
         private val sunsetView: TextView = view.findViewById(R.id.sunset)
+        private var dayIcon: ImageView = view.findViewById(R.id.iconDay)
 
 
         fun bind(data: DayForecast)
         {
-            Log.e("TEST3", "bind: "+ data.date)
-            Log.e("TAG", "bind: "+ data.date)
-            val instant = Instant.ofEpochMilli(data.date!!)
+            val instant = Instant.ofEpochSecond(data.dt)
             val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
             dateView.text = formatterMonthDay.format(dateTime)
+            //Log.e("TEST4", dateTime.toString())
 
-            val tDay = "Temp: " + data.temp!!.day.roundToInt() + "°"
+            val tDay = "Temp: " + data.temp.day.roundToInt() + "°"
             tempView.text = tDay
             val tMax = "High: " + data.temp.max.roundToInt() + "°"
             maxView.text = tMax
             val tMin = "Low: " + data.temp.min.roundToInt() + "°"
             minView.text = tMin
 
-            val instantSunrise = Instant.ofEpochMilli(data.sunrise)
+            val instantSunrise = Instant.ofEpochSecond(data.sunrise)
             val sunrise = LocalDateTime.ofInstant(instantSunrise, ZoneId.systemDefault())
             val tSunrise = "Sunrise: " + formatterHour.format(sunrise)
             sunriseView.text = tSunrise
 
-            val instantSunset = Instant.ofEpochMilli(data.sunset)
+            val instantSunset = Instant.ofEpochSecond(data.sunset)
             val sunset = LocalDateTime.ofInstant(instantSunset, ZoneId.systemDefault())
             val tSunset = "Sunset: " + formatterHour.format(sunset)
             sunsetView.text = tSunset
+
+            val iconName = data.weather.firstOrNull()?.icon
+            val iconUrl = "https://openweathermap.org/img/wn/${iconName}@2x.png"
+            Glide.with(this.dayIcon) //this
+                .load(iconUrl)
+                .into(dayIcon)
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
