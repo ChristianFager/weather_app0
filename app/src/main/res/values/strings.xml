@@ -2,24 +2,21 @@
     <string name="app_name">My Weather App</string>
     <string name="title_activity_forecast">Forecast</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="temperature">%1$d°</string>
+    <string name="st_paul_mn">St. Paul, MN</string>
+    <string name="feels_like">%1$d°</string>
+    <string name="tempMin">%1$d°</string>
+    <string name="tempMax">%1$d°</string>
+    <string name="humidity">%1$d</string>
+    <string name="pressure">%1$d</string>
+    <string name="date">Jan 26</string>
+    <string name="sunrise">Sunrise: 8:00am</string>
+    <string name="sunset">Sunset: 9:00pm</string>
+    <string name="forecast">Forecast</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="_72">72°</string>
-    <string name="st_paul_mn">St. Paul, MN</string>
-    <string name="feels_like_78">Feels like 78°</string>
-    <string name="low_65">Low 65°</string>
-    <string name="high_80">High 80°</string>
-    <string name="humidity_100">Humidity 100%</string>
-    <string name="pressure_1023_hpa">Pressure 1023 hPa</string>
-    <string name="jan_26">Jan 26</string>
-    <string name="sunrise_8_00am">Sunrise: 8:00am</string>
-    <string name="sunset_9_00pm">Sunset: 9:00pm</string>
-    <string name="low_68">Low: 68°</string>
-    <string name="high_79">High: 79°</string>
-    <string name="temp_73">Temp: 73°</string>
-    <string name="forecast">Forecast</string>
 </resources>
