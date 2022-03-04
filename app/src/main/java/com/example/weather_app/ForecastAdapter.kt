@@ -14,12 +14,11 @@ import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
 
-class MyAdapter(private val data: List<DayForecast>) : RecyclerView.Adapter<MyAdapter.ViewHolder>()
+class ForecastAdapter(private val data: List<DayForecast>) : RecyclerView.Adapter<ForecastAdapter.ViewHolder>()
 {
     @SuppressLint("NewApi")
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
     {
-        //private val formatter = DateTimeFormatter.ofPattern("MMM dd, hh:mma")
         private val formatterHour = DateTimeFormatter.ofPattern("h:mma")
         private val formatterMonthDay = DateTimeFormatter.ofPattern("MMM dd")
         private val dateView: TextView = view.findViewById(R.id.monthDay)
@@ -33,10 +32,10 @@ class MyAdapter(private val data: List<DayForecast>) : RecyclerView.Adapter<MyAd
 
         fun bind(data: DayForecast)
         {
+            //Log.e("TAG", "TEST1: " + data.toString())
             val instant = Instant.ofEpochSecond(data.dt)
             val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
             dateView.text = formatterMonthDay.format(dateTime)
-            //Log.e("TEST4", dateTime.toString())
 
             val tDay = "Temp: " + data.temp.day.roundToInt() + "°"
             tempView.text = tDay
