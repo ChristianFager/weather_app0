@@ -6,14 +6,14 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
-class ForecastViewModel @Inject constructor(private val service: Api) : ViewModel()
+class CurrentConditionsViewModel @Inject constructor(private val service: Api) : ViewModel()
 {
-    val forecastConditions: MutableLiveData<Forecast> = MutableLiveData()
+    public val currentConditions: MutableLiveData<CurrentConditions> = MutableLiveData()
 
 
     fun loadData(tzip: String) = runBlocking {
         launch {
-            forecastConditions.value = service.getForecast(tzip)
+            currentConditions.value = service.getCurrentConditions(tzip)
         }
     }
 }
