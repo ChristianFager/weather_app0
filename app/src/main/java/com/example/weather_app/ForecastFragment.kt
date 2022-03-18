@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weather_app.databinding.ForecastFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.HttpException
 import javax.inject.Inject
 
 
@@ -44,6 +45,15 @@ class ForecastFragment: Fragment()
         {
             binding.recyclerView.adapter = ForecastAdapter(it.list)
         }
-        viewModel.loadData(tzip)
+
+        try
+        {
+            viewModel.loadData(tzip)
+        }
+        catch (e: HttpException)
+        {
+            ErrorDialogFragment().show(childFragmentManager, "")
+        }
+
     }
 }

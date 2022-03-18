@@ -57,8 +57,7 @@ class CurrentConditionsFragment: Fragment()
         }
         catch (e: HttpException)
         {
-            val action = CurrentConditionsFragmentDirections.actionCurrendConditionsFragmentToSearchFragment()
-            findNavController().navigate(action)
+            ErrorDialogFragment().show(childFragmentManager, "")
         }
     }
 

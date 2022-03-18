@@ -2,7 +2,6 @@ package com.example.weather_app
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,10 +31,11 @@ class SearchFragment: Fragment()
 
         (requireActivity() as MainActivity).supportActionBar?.title = "Search"
 
+
         viewModel.showErrorDialog.observe(viewLifecycleOwner) { showError ->
             if (showError)
             {
-                ErrorDialogFragment().show(childFragmentManager, "")
+                //ErrorDialogFragment().show(childFragmentManager, "")
             }
         }
 
@@ -47,7 +47,6 @@ class SearchFragment: Fragment()
         viewModel.showErrorDialog.observe(viewLifecycleOwner) { showError ->
             if (showError)
             {
-                Log.e("TAG", "SHOW ERROR DIALOG FRAGMENT")
             }
         }
 
