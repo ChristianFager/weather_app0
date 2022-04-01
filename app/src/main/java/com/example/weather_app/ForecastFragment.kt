@@ -34,7 +34,7 @@ class ForecastFragment: Fragment()
         (requireActivity() as MainActivity).supportActionBar?.title = "Forecast"
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        tzip = args.zipCode
+        tzip = args.zipCode.toString()
     }
 
 
@@ -46,13 +46,28 @@ class ForecastFragment: Fragment()
             binding.recyclerView.adapter = ForecastAdapter(it.list)
         }
 
-        try
+        if (tzip != "99999")
         {
-            viewModel.loadData(tzip)
+            try
+            {
+                viewModel.loadData(tzip)
+            }
+            catch (e: HttpException)
+            {
+                ErrorDialogFragment().show(childFragmentManager, "")
+            }
         }
-        catch (e: HttpException)
+        else
+        //if (lat != 0.00)
         {
-            ErrorDialogFragment().show(childFragmentManager, "")
+            try
+            {
+                viewModel.loadLatLong(31.9686, 99.9018)
+            }
+            catch (e: HttpException)
+            {
+                ErrorDialogFragment().show(childFragmentManager, "")
+            }
         }
 
     }

@@ -16,4 +16,11 @@ class ForecastViewModel @Inject constructor(private val service: Api) : ViewMode
             forecastConditions.value = service.getForecast(tzip)
         }
     }
+
+
+    fun loadLatLong(lat: Double, lon: Double) = runBlocking {
+        launch {
+            forecastConditions.value = service.getForecastLatLong(lat, lon)
+        }
+    }
 }
