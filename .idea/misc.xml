@@ -3,12 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/CurrentConditionsFragment.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/ForecastFragment.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/SearchFragment.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/activity_forecast.xml" value="0.25" />
-        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/forecast.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/forecast_fragment.xml" value="0.15520833333333334" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/fragment_first.xml" value="0.12952898550724637" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/fragment_second.xml" value="0.12952898550724637" />
-        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/row_date.xml" value="0.33" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/row_date.xml" value="0.16" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/weather_app/app/src/main/res/layout/search_fragment.xml" value="0.22" />
       </map>
     </option>
   </component>

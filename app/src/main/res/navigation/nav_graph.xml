@@ -3,26 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/SearchFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.weather_app.FirstFragment"
+        android:id="@+id/SearchFragment"
+        android:name="com.example.weather_app.SearchFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/search_fragment">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_SearchFragment_to_CurrendConditionsFragment"
+            app:destination="@id/CurrendConditionsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.weather_app.SecondFragment"
+        android:id="@+id/CurrendConditionsFragment"
+        android:name="com.example.weather_app.CurrentConditionsFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/current_conditions_fragment">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_CurrendConditionsFragment_to_ForecastFragment"
+            app:destination="@id/ForecastFragment" />
+        <action
+            android:id="@+id/action_CurrendConditionsFragment_to_SearchFragment"
+            app:destination="@id/SearchFragment" />
+        <argument
+            android:name="zip_code"
+            app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/ForecastFragment"
+        android:name="com.example.weather_app.ForecastFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/forecast_fragment">
+        <action
+            android:id="@+id/action_ForecastFragment_to_CurrendConditionsFragment"
+            app:destination="@id/CurrendConditionsFragment" />
+        <argument
+            android:name="zip_code"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

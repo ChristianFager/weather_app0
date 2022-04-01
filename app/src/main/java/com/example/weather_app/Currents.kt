@@ -1,7 +1,10 @@
 package com.example.weather_app
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
 
+@Parcelize
 data class Currents
 (
     val temp: Float,
@@ -10,4 +13,4 @@ data class Currents
     @Json(name = "temp_max") val tempMax: Float,
     val pressure: Float,
     val humidity: Float,
-)
+) : Parcelable
