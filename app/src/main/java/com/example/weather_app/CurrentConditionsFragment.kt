@@ -21,8 +21,6 @@ class CurrentConditionsFragment: Fragment()
     lateinit var viewModel: CurrentConditionsViewModel
     private lateinit var binding: CurrentConditionsFragmentBinding
     private lateinit var tzip: String
-    //private var lat: Double = 0.0
-    //private var lon: Double = 0.0
     private val args: CurrentConditionsFragmentArgs by navArgs()
 
 
@@ -37,9 +35,7 @@ class CurrentConditionsFragment: Fragment()
 
         (requireActivity() as MainActivity).supportActionBar?.title = "Current Conditions"
 
-        tzip = args.zipCode.toString()
-        //lat = args.lat
-        //lon = args.lon
+        tzip = args.zip.toString()
 
         binding.btnForecast.setOnClickListener {
             navigateToForecast()
@@ -55,7 +51,7 @@ class CurrentConditionsFragment: Fragment()
             CurrentConditions -> bindData(CurrentConditions)
         }
 
-        if (tzip != "99999")
+        if (tzip != "0")
         {
             try
             {
@@ -67,12 +63,14 @@ class CurrentConditionsFragment: Fragment()
             }
         }
         else
-        //if (lat != 0.00)
         {
             try
             {
+                (activity as MainActivity).getLastKnownLocation()
+                val lat = (activity as MainActivity).lat
+                val lon = (activity as MainActivity).lon
 
-                viewModel.loadLatLong(31.9686, 99.9018)
+                viewModel.loadLatLong(lat, lon)
             }
             catch (e: HttpException)
             {

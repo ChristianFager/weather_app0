@@ -34,7 +34,7 @@ class ForecastFragment: Fragment()
         (requireActivity() as MainActivity).supportActionBar?.title = "Forecast"
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        tzip = args.zipCode.toString()
+        tzip = args.zip.toString()
     }
 
 
@@ -46,7 +46,7 @@ class ForecastFragment: Fragment()
             binding.recyclerView.adapter = ForecastAdapter(it.list)
         }
 
-        if (tzip != "99999")
+        if (tzip != "0")
         {
             try
             {
@@ -58,17 +58,19 @@ class ForecastFragment: Fragment()
             }
         }
         else
-        //if (lat != 0.00)
         {
             try
             {
-                viewModel.loadLatLong(31.9686, 99.9018)
+                (activity as MainActivity).getLastKnownLocation()
+                val lat = (activity as MainActivity).lat
+                val lon = (activity as MainActivity).lon
+
+                viewModel.loadLatLong(lat, lon)
             }
             catch (e: HttpException)
             {
                 ErrorDialogFragment().show(childFragmentManager, "")
             }
         }
-
     }
 }
