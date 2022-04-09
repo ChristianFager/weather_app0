@@ -1,7 +1,5 @@
 package com.example.weather_app
-
 import android.Manifest
-//import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
