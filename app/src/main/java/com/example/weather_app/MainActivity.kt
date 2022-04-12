@@ -66,6 +66,25 @@ class MainActivity : AppCompatActivity()
     }
 
 
+    fun ultimate_request_location()  //Tried every example I found, none are giving lat/lon
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 2)
+        }
+        fusedLocationsClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationsClient.lastLocation.addOnSuccessListener {
+            requestNewLocation()
+            if (it != null)
+            {
+                Log.d("TAG", it.toString())
+                lat = it.latitude
+                lon = it.longitude
+            }
+        }
+    }
+
+
     fun requestLocation()
     {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
@@ -211,8 +230,6 @@ class MainActivity : AppCompatActivity()
         fusedLocationsClient.lastLocation.addOnSuccessListener { location->
             if (location != null)
             {
-                // use your location object
-                // get latitude , longitude and other info from this
                 lat = location.latitude
                 lon = location.longitude
             }

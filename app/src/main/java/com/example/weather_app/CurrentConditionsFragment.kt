@@ -66,10 +66,9 @@ class CurrentConditionsFragment: Fragment()
         {
             try
             {
-                (activity as MainActivity).getLastKnownLocation()
+                (activity as MainActivity).ultimate_request_location()
                 val lat = (activity as MainActivity).lat
                 val lon = (activity as MainActivity).lon
-
                 viewModel.loadLatLong(lat, lon)
             }
             catch (e: HttpException)
