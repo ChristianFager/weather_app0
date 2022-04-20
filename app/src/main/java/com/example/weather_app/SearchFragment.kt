@@ -20,12 +20,14 @@ class SearchFragment: Fragment()
     private lateinit var binding: SearchFragmentBinding
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    {
         return inflater.inflate(R.layout.search_fragment, container, false)
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
         super.onViewCreated(view, savedInstanceState)
         binding = SearchFragmentBinding.bind(view)
 
@@ -35,7 +37,6 @@ class SearchFragment: Fragment()
         viewModel.showErrorDialog.observe(viewLifecycleOwner) { showError ->
             if (showError)
             {
-                //ErrorDialogFragment().show(childFragmentManager, "")
             }
         }
 
@@ -71,6 +72,12 @@ class SearchFragment: Fragment()
 
             val tzip = viewModel.getZip()
             val action = SearchFragmentDirections.actionSearchFragmentToCurrendConditionsFragment(tzip)
+            findNavController().navigate(action)
+        }
+
+
+        binding.btnLocation.setOnClickListener {
+            val action = SearchFragmentDirections.actionSearchFragmentToCurrendConditionsFragment("0")
             findNavController().navigate(action)
         }
     }

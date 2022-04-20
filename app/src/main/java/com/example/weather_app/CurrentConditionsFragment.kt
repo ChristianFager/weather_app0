@@ -35,7 +35,7 @@ class CurrentConditionsFragment: Fragment()
 
         (requireActivity() as MainActivity).supportActionBar?.title = "Current Conditions"
 
-        tzip = args.zipCode
+        tzip = args.zip.toString()
 
         binding.btnForecast.setOnClickListener {
             navigateToForecast()
@@ -51,13 +51,30 @@ class CurrentConditionsFragment: Fragment()
             CurrentConditions -> bindData(CurrentConditions)
         }
 
-        try
+        if (tzip != "0")
         {
-            viewModel.loadData(tzip)
+            try
+            {
+                viewModel.loadData(tzip)
+            }
+            catch (e: HttpException)
+            {
+                ErrorDialogFragment().show(childFragmentManager, "")
+            }
         }
-        catch (e: HttpException)
+        else
         {
-            ErrorDialogFragment().show(childFragmentManager, "")
+            try
+            {
+                (activity as MainActivity).ultimate_request_location()
+                val lat = (activity as MainActivity).lat
+                val lon = (activity as MainActivity).lon
+                viewModel.loadLatLong(lat, lon)
+            }
+            catch (e: HttpException)
+            {
+                ErrorDialogFragment().show(childFragmentManager, "")
+            }
         }
     }
 

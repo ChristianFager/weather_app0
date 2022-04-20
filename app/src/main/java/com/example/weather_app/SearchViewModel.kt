@@ -10,6 +10,8 @@ import kotlin.random.Random
 class SearchViewModel @Inject constructor() : ViewModel()
 {
     private var zipCode: String? = null
+    private var lat: Double = 0.00
+    private var lon: Double = 0.00
     private val _enableButton = MutableLiveData(false)
     val enableButton: LiveData<Boolean>
         get() = _enableButton

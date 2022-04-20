@@ -28,8 +28,9 @@
             android:id="@+id/action_CurrendConditionsFragment_to_SearchFragment"
             app:destination="@id/SearchFragment" />
         <argument
-            android:name="zip_code"
-            app:argType="string" />
+            android:name="zip"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -41,8 +42,9 @@
             android:id="@+id/action_ForecastFragment_to_CurrendConditionsFragment"
             app:destination="@id/CurrendConditionsFragment" />
         <argument
-            android:name="zip_code"
-            app:argType="string" />
+            android:name="zip"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>
