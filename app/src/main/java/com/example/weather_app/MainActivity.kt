@@ -1,11 +1,16 @@
 package com.example.weather_app
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
+import android.provider.Settings.EXTRA_CHANNEL_ID
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -14,8 +19,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.weather_app.databinding.ActivityMainBinding
+//import com.example.weather_app.databinding.ActivityMainBinding
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -235,4 +242,99 @@ class MainActivity : AppCompatActivity()
             }
         }
     }
+
+
+    fun make_notification()
+    {
+        /*
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.notification_icon)
+            .setContentTitle(textTitle)
+            .setContentText(textContent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+         */
+
+
+        //val intent = Intent(this, AlertDetails::class.java).apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        //var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        var builder = NotificationCompat.Builder(this, "0")
+            //.setSmallIcon(R.drawable.notification_icon)
+            .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+            .setContentTitle("My notification")
+            .setContentText("Much longer text that cannot fit one line...")
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText("Much longer text that cannot fit one line..."))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+    }
+
+
+    fun createNotificationChannel()
+    {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.common_google_play_services_notification_channel_name)
+            //val name = getString(0)
+            val descriptionText = getString(R.string.common_google_play_services_notification_channel_name)
+            //val descriptionText = getString(0)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            //val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            val channel = NotificationChannel("0", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+
+    /*
+    fun create_notification()
+    {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent : PendingIntent = PendingIntent.getActivity(
+            this,
+            0
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.Drawable.notification_icon)
+            .setContentTitle(textTitle)
+            .setContentText(textContent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NoficationManagerCompat.from(this)) {
+            notify(notifcaitonId, builder.build())
+        }
+    }
+
+
+    private fun createNotificationChannel()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            val name = getSTring(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager : NotificationManager =
+                getSystemService((Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChanell(channel))
+        }
+    }
+     */
 }

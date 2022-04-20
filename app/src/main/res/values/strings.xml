@@ -23,4 +23,5 @@
     <string name="txtSearch">Search</string>
     <string name="ok">OK</string>
     <string name="txtLocation">Use Location</string>
+    <string name="txtNotification">Enable Notifications</string>
 </resources>

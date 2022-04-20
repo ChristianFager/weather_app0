@@ -75,10 +75,14 @@ class SearchFragment: Fragment()
             findNavController().navigate(action)
         }
 
-
         binding.btnLocation.setOnClickListener {
             val action = SearchFragmentDirections.actionSearchFragmentToCurrendConditionsFragment("0")
             findNavController().navigate(action)
+        }
+
+        binding.btnNotifications.setOnClickListener {
+            (activity as MainActivity).createNotificationChannel()
+            (activity as MainActivity).make_notification()
         }
     }
 }
