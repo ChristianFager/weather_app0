@@ -1,10 +1,12 @@
 package com.example.weather_app
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.weather_app.databinding.SearchFragmentBinding
@@ -26,6 +28,7 @@ class SearchFragment: Fragment()
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
@@ -75,10 +78,24 @@ class SearchFragment: Fragment()
             findNavController().navigate(action)
         }
 
-
         binding.btnLocation.setOnClickListener {
             val action = SearchFragmentDirections.actionSearchFragmentToCurrendConditionsFragment("0")
             findNavController().navigate(action)
+        }
+
+        binding.btnNotifications.setOnClickListener {
+            (activity as MainActivity).createNotificationChannel()
+            //(activity as MainActivity).make_notification() //To send a single notification immediately//
+            if (!(activity as MainActivity).notifications_active)
+            {
+                (activity as MainActivity).start_service()
+                binding.btnNotifications.text = "Disable Notifications"
+            }
+            else
+            {
+                (activity as MainActivity).stop_service()
+                binding.btnNotifications.text = "Enable Notifications"
+            }
         }
     }
 }
