@@ -1,8 +1,7 @@
 package com.example.weather_app
+
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
-import android.provider.Settings.EXTRA_CHANNEL_ID
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -20,9 +18,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.example.weather_app.databinding.ActivityMainBinding
-//import com.example.weather_app.databinding.ActivityMainBinding
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,6 +35,7 @@ class MainActivity : AppCompatActivity()
     private lateinit var locationPermissionRequest: ActivityResultLauncher<Array<String>>
     var lat: Double = 32.7157
     var lon: Double = -117.1611
+    var notifications_active: Boolean = false;
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -246,45 +245,38 @@ class MainActivity : AppCompatActivity()
 
     fun make_notification()
     {
-        /*
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.notification_icon)
-            .setContentTitle(textTitle)
-            .setContentText(textContent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-         */
-
-
-        //val intent = Intent(this, AlertDetails::class.java).apply {
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        //var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-        var builder = NotificationCompat.Builder(this, "0")
+        val id: String = "my_channel_01"
+        val notification_id = 101
+
+        val weather_text: String = "Weather Updated"
+        var builder = NotificationCompat.Builder(this, id)
             //.setSmallIcon(R.drawable.notification_icon)
             .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-            .setContentTitle("My notification")
-            .setContentText("Much longer text that cannot fit one line...")
+            .setContentTitle("Weather App")
+            .setContentText(weather_text)
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText("Much longer text that cannot fit one line..."))
+                .bigText(weather_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(notification_id, builder.build())
+        }
     }
 
 
     fun createNotificationChannel()
     {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.common_google_play_services_notification_channel_name)
-            //val name = getString(0)
-            val descriptionText = getString(R.string.common_google_play_services_notification_channel_name)
-            //val descriptionText = getString(0)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            val name = "channel0"
+            val descriptionText = "channel_test" //getString(R.string.common_google_play_services_notification_channel_name)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            //val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-            val channel = NotificationChannel("0", name, importance).apply {
+            val channel = NotificationChannel("my_channel_01", name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system
@@ -295,46 +287,31 @@ class MainActivity : AppCompatActivity()
     }
 
 
-    /*
-    fun create_notification()
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun start_service()
     {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        notifications_active = true;
 
-        val pendingIntent : PendingIntent = PendingIntent.getActivity(
-            this,
-            0
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
+        val intent = Intent(this, service::class.java)
+        val pintent = PendingIntent.getService(this, 0, intent, 0)
+        val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarm.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis(),
+            (30 * 1000).toLong(),
+            pintent
         )
-
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.Drawable.notification_icon)
-            .setContentTitle(textTitle)
-            .setContentText(textContent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NoficationManagerCompat.from(this)) {
-            notify(notifcaitonId, builder.build())
-        }
     }
 
 
-    private fun createNotificationChannel()
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun stop_service()
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            val name = getSTring(R.string.channel_name)
-            val descriptionText = getString(R.string.channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager : NotificationManager =
-                getSystemService((Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChanell(channel))
-        }
+        notifications_active = false;
+        val intent = Intent(this, service::class.java)
+        val sender = PendingIntent.getBroadcast(this, 0, intent, 0)
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(sender)
+        stopService(Intent(applicationContext, service::class.java))
     }
-     */
 }
